@@ -3,6 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
+    android:onClick="startActivity"
     android:background="@color/colorPrimary"
     android:padding="12dp">
 
@@ -12,15 +13,6 @@
         android:layout_height="wrap_content"
         android:textSize="30sp" />
 
-    <TextView
-        android:id="@+id/titulo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        android:textColor="#fff"
-        android:textAlignment="center"
-        android:textSize="40sp" />
-
     <EditText
         android:id="@+id/editText"
         android:layout_width="match_parent"
@@ -28,11 +20,5 @@
         android:hint="You will see input here"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
 
-    <ImageButton
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/button_background" />
 
 </LinearLayout>

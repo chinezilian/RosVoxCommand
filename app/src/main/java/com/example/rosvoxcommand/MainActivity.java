@@ -56,14 +56,21 @@ public class MainActivity extends RosActivity {
         editT = findViewById(R.id.editText);
         mButton=findViewById(R.id.button);
 
-        mButton.setOnClickListener(new View.OnClickListener() {
+     /*   mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 inicio();
             }
-        });
+        });*/
+     inicio(Main2Activity.getSaidaVoz());
     }
-    private void inicio() {
+    void inicio(String voz) {
+        if (voz != null) {
+            SaidaVoz=voz;
+            editT.setText(voz);
+        }
+    }
+   /* private void inicio() {
     final Intent mSpeechRecognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         mSpeechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
     RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
@@ -108,7 +115,7 @@ public class MainActivity extends RosActivity {
         }
         return fala;
 
-    }
+    }*/
 
     @Override
     protected void init(NodeMainExecutor nodeMainExecutor) {
@@ -127,6 +134,10 @@ public class MainActivity extends RosActivity {
         // start displaying incoming messages.
         nodeMainExecutor.execute(rosTextView, nodeConfiguration);
     }
+    public void startActivity(View view) {
 
+        Intent secondActivity = new Intent(this, Main2Activity.class);
+        startActivity(secondActivity);
+    }
 
 }
