@@ -17,21 +17,24 @@ import org.ros.android.RosActivity;
 import org.ros.android.view.RosTextView;
 import org.ros.node.NodeConfiguration;
 import org.ros.node.NodeMainExecutor;
-
+import org.apache.commons.logging.Log;
 
 public class MainActivity extends RosActivity {
-    private static final int REQ_COD_INPUT =1000;
     private RosTextView<std_msgs.String> rosTextView;
-    private Talker talker;
+    private static Talker talker;
     private Listener listener;
-    private EditText editT;
-    private ImageButton mButton;
+    private static EditText editT;
+    // private ImageButton mButton;
     private static String SaidaVoz;
+    static final Log log = null;
 
     public static String getSaidaVoz() {
         return SaidaVoz;
     }
 
+    public static void setSaidaVoz(String saidaVoz) {
+        SaidaVoz = saidaVoz;
+    }
     public MainActivity() {
         // The RosActivity constructor configures the notification title and ticker
         // messages.
@@ -54,7 +57,7 @@ public class MainActivity extends RosActivity {
         });
 
         editT = findViewById(R.id.editText);
-        mButton=findViewById(R.id.button);
+       // mButton=findViewById(R.id.button);
 
      /*   mButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,14 +65,19 @@ public class MainActivity extends RosActivity {
                 inicio();
             }
         });*/
+
      inicio(Main2Activity.getSaidaVoz());
+
     }
-    void inicio(String voz) {
-        if (voz != null) {
-            SaidaVoz=voz;
+
+    static void inicio(String voz) {
+        if(voz!=null) {
+            SaidaVoz = voz;
             editT.setText(voz);
         }
     }
+
+
    /* private void inicio() {
     final Intent mSpeechRecognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         mSpeechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,

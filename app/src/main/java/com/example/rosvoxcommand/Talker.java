@@ -29,48 +29,76 @@ import org.ros.node.topic.Publisher;
  * @author damonkohler@google.com (Damon Kohler)
  */
 public class Talker extends AbstractNodeMain {
-  private String topic_name;
+    private String topic_name;
+    private Publisher<std_msgs.String> publisher;
 
-  public Talker() {
-    topic_name = "chatter";
-  }
+    public Talker() {
+        topic_name = "chatter";
+    }
 
-  public Talker(String topic)
-  {
-    topic_name = topic;
-  }
+    public Talker(String topic) {
+        topic_name = topic;
+    }
 
-  @Override
-  public GraphName getDefaultNodeName() {
-    return GraphName.of("rosjava_tutorial_pubsub/talker");
-  }
+    @Override
+    public GraphName getDefaultNodeName() {
+        return GraphName.of("rosjava_tutorial_pubsub/talker");
+    }
 
-  @Override
-  public void onStart(final ConnectedNode connectedNode) {
-    final Publisher<std_msgs.String> publisher =
-            connectedNode.newPublisher("chatter", std_msgs.String._TYPE);
-    // This CancellableLoop will be canceled automatically when the node shuts
-    // down.
+    @Override
+    public void onStart(final ConnectedNode connectedNode) {
+        publisher =
+                connectedNode.newPublisher("chatter", std_msgs.String._TYPE);
+        // This CancellableLoop will be canceled automatically when the node shuts
+        // down.
     connectedNode.executeCancellableLoop(new CancellableLoop() {
-      private int sequenceNumber;
+      private int i;
       String speak;
 
       @Override
       protected void setup() {
-        sequenceNumber = 0;
+
+        speak = null;
       }
 
       @Override
       protected void loop() throws InterruptedException {
         std_msgs.String str = publisher.newMessage();
         speak = MainActivity.getSaidaVoz();
-        if(speak!=null) {
-          str.setData(speak);
-          publisher.publish(str);
-          sequenceNumber++;
-          Thread.sleep(1000);
-        }
+          i = 0;
+       if(speak!=null){
+           while (i<10) {
+               i++;
+               str.setData(speak);
+               publisher.publish(str);
+               Thread.sleep(1000);
+           }
+        Main2Activity.setSaidaVoz(null);
+        MainActivity.setSaidaVoz(null);
+        speak=null;
+
+       }
+
       }
+
     });
-  }
+    }
+/*        while (speak!=null) {
+          i++;
+          if(i==10) {
+            i = 0;
+            Thread.sleep(500);
+          }
+        }
+
+    public void publishMessage(String s) {
+        while (true) {
+            std_msgs.String str = publisher.newMessage();
+            s = MainActivity.getSaidaVoz();
+            str.setData(s);
+            publisher.publish(str);
+        }
+
+    }*/
 }
+

@@ -26,7 +26,11 @@ public class Main2Activity extends Activity {
     private static final int REQ_COD_INPUT =1000;
     private EditText editText;
     private static String SaidaVoz;
+    int i=0;
 
+    public static void setSaidaVoz(String saidaVoz) {
+        SaidaVoz = saidaVoz;
+    }
     public static String getSaidaVoz() {
         return SaidaVoz;
     }
@@ -36,15 +40,19 @@ public class Main2Activity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         checkPermission();
-        editText= findViewById(R.id.edit_text);
+        editText = findViewById(R.id.edit_text);
         final ImageButton mButton;
-        mButton=findViewById(R.id.button);
+        mButton = findViewById(R.id.button);
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 inicio();
+
+
             }
         });
+
+
     }
     private void inicio() {
         final Intent mSpeechRecognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
@@ -70,6 +78,7 @@ public class Main2Activity extends Activity {
                 if(resultCode==RESULT_OK&&null != dados) {
                     ArrayList<String> result = dados.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                     String EntradaVoz;
+                    i=0;
                     EntradaVoz = result.get(0);
                     SaidaVoz=comparator(EntradaVoz);
                     editText.setText(SaidaVoz);
@@ -88,7 +97,7 @@ public class Main2Activity extends Activity {
                 break;
             } else if (listCommand.length - 1 == i) {
                 Toast.makeText(getApplicationContext(),"Comando invalido,tente novamente",Toast.LENGTH_SHORT).show();
-                fala=null;
+                fala="invalido";
             }
         }
         return fala;
