@@ -80,29 +80,40 @@ public class Main2Activity extends Activity {
                     String EntradaVoz;
                     i=0;
                     EntradaVoz = result.get(0);
-                    SaidaVoz=comparator(EntradaVoz);
+                    SaidaVoz = comparator(EntradaVoz);
                     editText.setText(SaidaVoz);
-
                 }
                 break;
-
         }
-
     }
+
     String comparator(String fala) {
-        String listCommand[] = {"frente", "vira direita", "vira a esquerda", "traz"};
+        String listCommand[] = {"frente", "front", "direita", "right", "esquerda", "left","traz", "back", "rápido", "fast", "lento","slow"};
         for (int i = 0; i <= listCommand.length - 1; i++) {
             if (listCommand[i].equalsIgnoreCase(fala)) {
-                Toast.makeText(getApplicationContext(),fala,Toast.LENGTH_SHORT).show();
-                break;
-            } else if (listCommand.length - 1 == i) {
-                Toast.makeText(getApplicationContext(),"Comando invalido,tente novamente",Toast.LENGTH_SHORT).show();
-                fala="invalido";
+                    Toast.makeText(getApplicationContext(), fala, Toast.LENGTH_SHORT).show();
+                    break;
+            }
+            else if (listCommand.length - 1 == i) {
+                if(fala=="traz"){
+                    fala="atras";
+                    Toast.makeText(getApplicationContext(),fala,Toast.LENGTH_SHORT).show();
+                    break;
+                }
+                else if(fala=="rápido") {
+                    fala = "rapido";
+                    Toast.makeText(getApplicationContext(),fala,Toast.LENGTH_SHORT).show();
+                    break;
+                }
+                else {
+                    Toast.makeText(getApplicationContext(), "Comando inválido,tente novamente", Toast.LENGTH_SHORT).show();
+                    fala = "inválido";
+                }
             }
         }
         return fala;
-
     }
+
 
     private void checkPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
